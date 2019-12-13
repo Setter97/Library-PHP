@@ -144,4 +144,16 @@
             echo "0 results";
         }
     }//selectReservas
+
+    function penalizacion($dni){
+        include 'DB_Connect.php';
+        $sql="SELECT penalizacion from members where member_dni='$dni'";
+        $result=mysqli_query($conn,$sql);
+        $data=mysqli_fetch_assoc($result);
+        if($data['penalizacion']===NULL){
+            return false;
+        }else{
+            return true;
+        }
+    }
 ?>
