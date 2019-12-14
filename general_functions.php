@@ -145,15 +145,57 @@
         }
     }//selectReservas
 
-    function penalizacion($dni){
+    function comprovaPenalitzacio($dni){
         include 'DB_Connect.php';
         $sql="SELECT penalizacion from members where member_dni='$dni'";
         $result=mysqli_query($conn,$sql);
         $data=mysqli_fetch_assoc($result);
         if($data['penalizacion']===NULL){
-            return false;
+            return "false";
         }else{
-            return true;
+            return "true";
         }
+    }
+
+    function possarPenalitzacio($dni,$bookID,$dateAt){
+        include 'DB_Connect.php';
+
+        $sql="SELECT date_end,real_end from reservations where book_id='$bookID' and `reservations`.`member_dni`='$dni' and reservations.date_at='$dateAt'";
+        $result=mysqli_query($conn,$sql);
+        $data=mysqli_fetch_assoc($result);
+        $dia1= substr($data['real_end'],0,10);
+        $dia2=substr($data['date_end'],0,10);
+
+        $datetime1 = new DateTime($dia1);
+        $datetime2 = new DateTime($dia2);
+
+        $interval = $datetime2->diff($datetime1);
+        $diff=$interval->format('%R%a');
+        
+        if($diff<=0){
+            echo "mu bien";
+        }else{
+            if(comprovaPenalitzacio($dni)=="false"){
+                $date = date("Y-m-d");
+                $mod_date = strtotime($date."$diff days");
+                $dia= date("Y-m-d",$mod_date);
+                $sql="UPDATE `members` SET `penalizacion` = '$dia' where member_dni='$dni'";
+                mysqli_query($conn,$sql);
+                
+            }else{
+                
+                $sql="SELECT penalizacion from members where member_dni='$dni'";
+                $result=mysqli_query($conn,$sql);
+                $data=mysqli_fetch_assoc($result);
+                $substring=substr($data['penalizacion'],0,10);
+
+                $datetime= date($substring);
+                $mod_date = strtotime($datetime."$diff days");
+                $dia= date("Y-m-d",$mod_date);
+                echo $dia;
+                $sql="UPDATE `members` SET `penalizacion` = '$dia' where member_dni='$dni'";
+                mysqli_query($conn,$sql);
+            }
+        };
     }
 ?>
