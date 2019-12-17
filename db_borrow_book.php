@@ -3,10 +3,22 @@ include 'DB_Connect.php';
     if(isset($_POST['isset_borrow'])){
         $bookID=mysqli_real_escape_string($conn,$_POST['borrow']);
     }
+    $result=mysqli_query($conn,"select penalizacion from members WHERE member_dni='$_COOKIE[idUsuario]';");
+    $data=mysqli_fetch_assoc($result);
+    
+    if($data['penalizacion']!=NULL){
+        $dia=substr($data['penalizacion'],0,10);
+        $date= date($dia);
+        $dateActual=date("Y-m-d");
+        $centinela=$date>$dateActual;
+    }
+    
     $result=mysqli_query($conn,"select count(*) as total from reservations WHERE member_dni='$_COOKIE[idUsuario]' and book_id='$bookID' and real_end IS NULL;");
     $data=mysqli_fetch_assoc($result);
     if($data['total']!=0){
         echo "Ya has reservado este libro";
+    }else if($centinela){
+        echo "Estas penalizado";
     }else{
         if(mysqli_query($conn,"select copyBook from books where book_id='$bookID';")!=0){
             $sqlUpdate="update books set copybook=copybook-1 where book_id='$bookID'";
