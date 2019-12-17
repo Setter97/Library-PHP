@@ -12,7 +12,7 @@
             possarPenalitzacio($_POST['dni'],$_POST['book_id'],$_POST['date']);
             
             
-            //header('Location: html_borrowsList.php');
+            header('Location: html_borrowsList.php');
         }else{
             echo"Error";
         }
