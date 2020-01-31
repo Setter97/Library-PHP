@@ -11,17 +11,36 @@
     <h1>Shopping cart</h1>
 
     <div class="grupo">
-        <label>Cosa</label>
+        <label>Item1</label>
         <input type="number" class="qty" value="1"/>
-        <input type="number" class="precio" value="24" readonly/>
-        <input type="number" class="precioQty" value="24" readonly/>
+        <input type="number" class="precio" value="15.99" readonly/>
+        <input type="number" class="precioQty" value="15.99" readonly/>
     </div>
     <div class="grupo">
-        <label>Cosa2</label>
+        <label>Item2</label>
         <input type="number" class="qty" value="1"/>
         <input type="number" class="precio" value="12.39" readonly/>
         <input type="number" class="precioQty" value="12.39" readonly/>
     </div>
+    <div class="grupo">
+        <label>Item3</label>
+        <input type="number" class="qty" value="1"/>
+        <input type="number" class="precio" value="1.99" readonly/>
+        <input type="number" class="precioQty" value="1.99" readonly/>
+    </div>
+    <div class="grupo">
+        <label>Item4</label>
+        <input type="number" class="qty" value="1"/>
+        <input type="number" class="precio" value="7.10" readonly/>
+        <input type="number" class="precioQty" value="7.10" readonly/>
+    </div>
+    <div class="grupo">
+        <label>Item5</label>
+        <input type="number" class="qty" value="1"/>
+        <input type="number" class="precio" value="4.70" readonly/>
+        <input type="number" class="precioQty" value="4.70" readonly/>
+    </div>
+
 
     <div class="grupo">
         <label>Total</label>
