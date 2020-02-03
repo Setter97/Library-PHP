@@ -8,6 +8,7 @@ $category=$_GET['category'];
 $location=$_GET['location'];
 $copybooks=$_GET['copy'];
 $languaje=$_GET['languajes'];
+$price=$_GET['price'];
 
 
 $result=mysqli_query($conn,"select count(*) as total from author WHERE name='$author'");
@@ -27,8 +28,8 @@ $data=mysqli_fetch_assoc($result);
 if($data['total']!=0){
     echo "Localizacion no disponible<br>";
 }else{
-    $sql="INSERT INTO `books` ( `title`, `ISBN`, `author_id`, `editorial`, `category`, `languajes`, `addBookdate`, `location`, `copyBook`,`avaliable`) 
-    VALUES ('$title', '$isbn', '$authorID[author_id]', '$editorial', '$category', '$languaje', CURRENT_TIMESTAMP, '$location', '$copybooks','1')";
+    $sql="INSERT INTO `books` ( `title`, `ISBN`, `author_id`, `editorial`, `category`, `languajes`, `addBookdate`, `location`, `copyBook`,`avaliable`,`price`) 
+    VALUES ('$title', '$isbn', '$authorID[author_id]', '$editorial', '$category', '$languaje', CURRENT_TIMESTAMP, '$location', '$copybooks','1','$price')";
 
     $result=mysqli_query($conn,$sql);
 

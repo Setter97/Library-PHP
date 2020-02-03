@@ -8,5 +8,6 @@
     Languajes: <input type="text" name="languajes"><br>
     CopyBooks: <input type="number" name="copy"><br>
     Location: <input type="number" name="location"><br>
+    Price: <input type="number" name="price"  step="0.01"><br>
     <input class='btn btn-outline-success my-2 my-sm-0' type="submit">
 </form>

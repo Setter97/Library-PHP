@@ -5,7 +5,7 @@ if($_COOKIE['idCliente']==0){
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 
         <a class="navbar-brand" href="http://localhost:8888/php/Library/">
-            <img src="img/logo.png" width="30" height="30" alt="">
+            <img src="http://localhost:8888/php/Library/img/logo.png" width="30" height="30" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,8 +43,18 @@ if($_COOKIE['idCliente']==0){
                         <a class="dropdown-item" href="http://localhost:8888/php/Library/signOut.php">Sign out</a>
                     </div>
                 </li>
-                
             </ul>
+
+            <div class="navbar-collapse collapse  order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8888/php/Library/shopping_cart/html_shopping_cart.php">
+                            <img src="http://localhost:8888/php/Library/img/cart.png" width="30" height="30" alt="cart">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </nav>
 
@@ -56,7 +66,7 @@ if($_COOKIE['idCliente']==0){
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 
         <a class="navbar-brand" href="http://localhost:8888/php/Library/">
-            <img src="img/logo.png" width="30" height="30" alt="">
+            <img src="http://localhost:8888/php/Library/img/logo.png" width="30" height="30" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,8 +101,17 @@ if($_COOKIE['idCliente']==0){
                         <a class="dropdown-item" href="http://localhost:8888/php/Library/signOut.php">Sign out</a>
                     </div>
                 </li>
-                
             </ul>
+
+
+            <div class="navbar-collapse collapse  order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <a class="nav-link" href="http://localhost:8888/php/Library/shopping_cart/html_shopping_cart.php">
+                        <img src="http://localhost:8888/php/Library/img/cart.png" width="30" height="30" alt="cart">
+                    </a>
+                </ul>
+            </div>
+
         </div>
     </nav>
 
@@ -103,7 +122,7 @@ if($_COOKIE['idCliente']==0){
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 
         <a class="navbar-brand" href="http://localhost:8888/php/Library/">
-            <img src="img/logo.png" width="30" height="30" alt="">
+            <img src="http://localhost:8888/php/Library/img/logo.png" width="30" height="30" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

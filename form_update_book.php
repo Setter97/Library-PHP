@@ -17,26 +17,29 @@
                 <label for='isbn'>ISBN:</label>
                 <input type='text' name='isbn' value='$_POST[isbn]' id='isbn'>
                 <br>
-                <label for='title'>Author:</label>
+                <label for='aithor'>Author:</label>
                 <input type='text' name='author' value='$_POST[author]' id='author'>
                 <br>
-                <label for='title'>Editorial:</label>
+                <label for='editorial'>Editorial:</label>
                 <input type='text' name='editorial' value='$_POST[editorial]' id='editorial'>
                 <br>
-                <label for='title'>Category:</label>
+                <label for='category'>Category:</label>
                 <input type='text' name='category' value='$_POST[category]' id='category'>
                 <br>
-                <label for='title'>Languaje:</label>
+                <label for='languajes'>Languaje:</label>
                 <input type='text' name='languajes' value='$_POST[languajes]' id='languajes' >
                 <br>
-                <label for='title'>Copy book:</label>
+                <label for='copyBook'>Copy book:</label>
                 <input type='number' name='copyBook' value='$_POST[copyBook]' id='copyBook' >
                 <br>
-                <label for='title'>Location:</label>
+                <label for='location'>Location:</label>
                 <input type='number' name='location' value='$_POST[location]' id='location' >
                 <br>
-                <label for='title'>Avaliable:</label>
+                <label for='avaliable'>Avaliable:</label>
                 <input type='number' name='avaliable' value='$_POST[avaliable]' id='avaliable' >
+                <br>
+                <label for='price'>Price:</label>
+                <input type='number' name='price' value='$_POST[price]' id='price' step='0.01' >
                 <br>
                 <button type='submit' name='isset_update_to_flama'>Update</button>
             </form>";

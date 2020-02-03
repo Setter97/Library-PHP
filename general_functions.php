@@ -17,7 +17,7 @@
                     
                     echo"<div style='padding:1rem'>";
                     
-                    echo "Title: " . $row["title"]. " <br> ISBN: " . $row["ISBN"]. " <br> Author: " .$nombre['name']." <br> Editorial: " . $row["editorial"]." <br> Category: " . $row["category"]." <br> Languaje: " . $row["languajes"]." <br> Book date: " . $row["addBookdate"]." <br> Location: " . $row["location"]." <br> Avaliable: " .$avaliable."<br>";
+                    echo "Title: " . $row["title"]. " <br> ISBN: " . $row["ISBN"]. " <br> Author: " .$nombre['name']." <br> Editorial: " . $row["editorial"]." <br> Category: " . $row["category"]." <br> Languaje: " . $row["languajes"]." <br> Book date: " . $row["addBookdate"]." <br> Location: " . $row["location"]." <br> Avaliable: " .$avaliable."<br> Price: ".$row["price"]."€";
                     
                     if($_COOKIE['idCliente']==0){
                         echo "<form action='db_delete_book.php' method='post'>
@@ -36,6 +36,7 @@
                         <input type='number' name='copyBook' value='$row[copyBook]' id='copyBook' hidden>
                         <input type='number' name='location' value='$row[location]' id='location' hidden>
                         <input type='number' name='avaliable' value='$row[avaliable]' id='avaliable' hidden>
+                        <input type='number' name='price' value='$row[price]' id='price' step='0.01' hidden>
         
                         <button class='btn btn-outline-info my-2 my-sm-1' type='submit' name='isset_update'>Update</button>
                     </form>";
@@ -69,6 +70,7 @@
                         <input type='number' name='copyBook' value='$row[copyBook]' id='copyBook' hidden>
                         <input type='number' name='location' value='$row[location]' id='location' hidden>
                         <input type='number' name='avaliable' value='$row[avaliable]' id='avaliable' hidden>
+                        <input type='number' name='price' value='$row[price]' id='price' step='0.01' hidden>
         
                         <button class='btn btn-outline-info my-2 my-sm-1' type='submit' name='isset_update'>Update</button>
                     </form>";

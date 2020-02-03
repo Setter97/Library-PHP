@@ -12,6 +12,7 @@ include 'DB_Connect.php';
         $avaliable=mysqli_real_escape_string($conn,$_POST['avaliable']);
         $iD=mysqli_real_escape_string($conn,$_POST['bookID']);
         $location=mysqli_real_escape_string($conn,$_POST['location']);
+        $price=mysqli_real_escape_string($conn,$_POST['price']);
 
         $result=mysqli_query($conn,"select count(*) as total from books WHERE location=$location");
         $data=mysqli_fetch_assoc($result);
@@ -21,7 +22,7 @@ include 'DB_Connect.php';
 
         if($data2['total']==1){
 
-            $sql="UPDATE `books` SET `title` = '$titulo', `ISBN` = '$isbn',  `editorial` = '$editorial', `category` = '$category', `languajes` = '$languaje', `location` = $location, `copyBook` = '$copybook', `avaliable` = '$avaliable' WHERE `book_id` = $iD";
+            $sql="UPDATE `books` SET `title` = '$titulo', `ISBN` = '$isbn',  `editorial` = '$editorial', `category` = '$category', `languajes` = '$languaje', `location` = $location, `copyBook` = '$copybook', `avaliable` = '$avaliable',`price` = '$price' WHERE `book_id` = $iD";
        
             if(!mysqli_query($conn,$sql)){
                 echo "Error: "+mysqli_error($conn);
@@ -33,7 +34,7 @@ include 'DB_Connect.php';
 
             }else{
     
-                $sql="UPDATE `books` SET `title` = '$titulo', `ISBN` = '$isbn',  `editorial` = '$editorial', `category` = '$category', `languajes` = '$languaje', `location` = $location, `copyBook` = '$copybook', `avaliable` = '$avaliable' WHERE `book_id` = $iD";
+                $sql="UPDATE `books` SET `title` = '$titulo', `ISBN` = '$isbn',  `editorial` = '$editorial', `category` = '$category', `languajes` = '$languaje', `location` = $location, `copyBook` = '$copybook', `price` = '$price' WHERE `book_id` = $iD";
             
                 if(!mysqli_query($conn,$sql)){
                     echo "Error: "+mysqli_error($conn);
