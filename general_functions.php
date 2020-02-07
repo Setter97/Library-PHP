@@ -49,6 +49,11 @@
                         <input type='number' name='borrow' value='$row[book_id]' id='borrow' hidden>
                         <button class='btn btn-outline-success my-2 my-sm-1' type='submit' name='isset_borrow'>Borrow</button>
                         </form>";
+
+                        echo "<form action='db_buyingBook.php' method='post'>
+                        <input type='number' name='bookID' value='$row[book_id]' id='bookID' hidden>
+                        <button class='btn btn-outline-primary my-2 my-sm-1' type='submit' name='isset_buy'>Buy book</button>
+                        </form>";
                     }
                     
 
@@ -199,5 +204,31 @@
                 mysqli_query($conn,$sql);
             }
         };
+    }
+
+    function appendLocalStorage($id){
+        include 'DB_Connect.php';
+        $infoSql=mysqli_query($conn,"select title,author_id,price from books where book_id='$id'");
+        $info=$infoSql->fetch_assoc();
+        $titulo=$info['title'];
+        $author=$info['author_id'];
+        $price=$info['price'];
+
+
+         
+        $libro=new stdClass();
+
+        $libro -> title = $titulo;
+        $libro -> author = $author;
+        $libro -> price = $price;
+        $superjason=json_encode($libro);
+
+        echo " <script>
+            localStorage.setItem('cart$id','$superjason');
+        </script>";
+    }
+
+    function resetLocalStorage(){
+       
     }
 ?>
