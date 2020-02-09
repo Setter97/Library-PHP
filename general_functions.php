@@ -227,8 +227,5 @@
             localStorage.setItem('cart$id','$superjason');
         </script>";
     }
-
-    function resetLocalStorage(){
-       
-    }
+    function resetLocalStorage(){}
 ?>
