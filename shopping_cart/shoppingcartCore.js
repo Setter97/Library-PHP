@@ -1,31 +1,39 @@
 //creaDiv("Item 1",25)
 let arrayBooks = new Array();
 for (let i = 0; i < localStorage.length; i++) {
+
     let key = localStorage.key(i)
     if (key.includes('cart')) {
         let book = localStorage.getItem(key);
         arrayBooks.push(JSON.parse(book));
-        creaDiv(arrayBooks[i].title, arrayBooks[i].price);
+        creaDiv(arrayBooks[i].title, arrayBooks[i].price,i,arrayBooks[i].id);
     }
 }
 creaResultID()
 
 setCookie('cart',JSON.stringify(arrayBooks));
 
-function creaDiv(nameBook, price) {
+function creaDiv(nameBook, price,i,id) {
     let form = document.getElementById('form');
     let div = document.createElement("div");
     div.className = "grupo"
 
     let label = document.createElement("label");
     let text = document.createTextNode(nameBook);
+    let inputID=document.createElement('input');
+    inputID.value=id;
+    inputID.hidden=true;
+    inputID.name=`id${i}`
+
     label.appendChild(text);
     div.appendChild(label);
+    div.appendChild(inputID);
 
     let qty = document.createElement("input");
     qty.value = 1;
     qty.type = "number"
     qty.className = "qty"
+    qty.name=`qty${i}`
     qty.min = 1;
     div.appendChild(qty);
 
@@ -33,12 +41,14 @@ function creaDiv(nameBook, price) {
     precio.className = "precio";
     precio.value = price
     precio.step = 0.01;
+    precio.name=`price${i}`
     precio.type = "number"
     div.appendChild(precio);
 
     let precioQty = document.createElement("input");
     precioQty.value = price
     precioQty.step = 0.01
+    precioQty.name=`precioQty${i}`
     precioQty.className = "precioQty"
     div.appendChild(precioQty);
 
@@ -59,6 +69,7 @@ function creaResultID() {
     let inResult = document.createElement('input');
     inResult.id = 'result';
     inResult.value = 0;
+    inResult.name='result';
     inResult.readOnly = true;
 
     divResult.appendChild(inResult);

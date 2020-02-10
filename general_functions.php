@@ -221,11 +221,14 @@
         $libro -> title = $titulo;
         $libro -> author = $author;
         $libro -> price = $price;
+        $libro -> id = $id;
         $superjason=json_encode($libro);
 
         echo " <script>
             localStorage.setItem('cart$id','$superjason');
         </script>";
     }
-    function resetLocalStorage(){}
+    function resetLocalStorage(){
+        echo "<script>localStorage.clear();</script>";
+    }
 ?>
