@@ -6,24 +6,24 @@ for (let i = 0; i < localStorage.length; i++) {
     if (key.includes('cart')) {
         let book = localStorage.getItem(key);
         arrayBooks.push(JSON.parse(book));
-        creaDiv(arrayBooks[i].title, arrayBooks[i].price,i,arrayBooks[i].id);
+        creaDiv(arrayBooks[i].title, arrayBooks[i].price, i, arrayBooks[i].id);
     }
 }
 creaResultID()
 
-setCookie('cart',JSON.stringify(arrayBooks));
+setCookie('cart', JSON.stringify(arrayBooks));
 
-function creaDiv(nameBook, price,i,id) {
+function creaDiv(nameBook, price, i, id) {
     let form = document.getElementById('form');
     let div = document.createElement("div");
     div.className = "grupo"
 
     let label = document.createElement("label");
     let text = document.createTextNode(nameBook);
-    let inputID=document.createElement('input');
-    inputID.value=id;
-    inputID.hidden=true;
-    inputID.name=`id${i}`
+    let inputID = document.createElement('input');
+    inputID.value = id;
+    inputID.hidden = true;
+    inputID.name = `id${i}`
 
     label.appendChild(text);
     div.appendChild(label);
@@ -33,7 +33,7 @@ function creaDiv(nameBook, price,i,id) {
     qty.value = 1;
     qty.type = "number"
     qty.className = "qty"
-    qty.name=`qty${i}`
+    qty.name = `qty${i}`
     qty.min = 1;
     div.appendChild(qty);
 
@@ -41,17 +41,25 @@ function creaDiv(nameBook, price,i,id) {
     precio.className = "precio";
     precio.value = price
     precio.step = 0.01;
-    precio.name=`price${i}`
+    precio.name = `price${i}`
     precio.type = "number"
+    precio.readOnly = true;
     div.appendChild(precio);
 
     let precioQty = document.createElement("input");
     precioQty.value = price
     precioQty.step = 0.01
-    precioQty.name=`precioQty${i}`
+    precioQty.name = `precioQty${i}`
     precioQty.className = "precioQty"
     div.appendChild(precioQty);
 
+    let erase = document.createElement('button');
+    erase.value = i;
+    erase.addEventListener('click', borrarLibro);
+    erase.textContent = 'Borrar';
+    erase.type = 'button'
+    erase.className = 'btn btn-outline-danger my-1 my-sm-2'
+    div.appendChild(erase);
 
     form.appendChild(div);
     //document.body.appendChild(div);
@@ -69,22 +77,59 @@ function creaResultID() {
     let inResult = document.createElement('input');
     inResult.id = 'result';
     inResult.value = 0;
-    inResult.name='result';
+    inResult.name = 'result';
     inResult.readOnly = true;
 
     divResult.appendChild(inResult);
 
-    let button = document.createElement('button')
-    button.textContent = "COMPRAR";
-    button.className = 'btn btn-outline-success my-2 my-sm-1'
-
 
     form.appendChild(divResult);
-    form.appendChild(button);
+
+
+    let totalSuma = 0
+    $('.precioQty').each(function () {
+        let inputVal = $(this).val();
+        if ($.isNumeric(inputVal)) {
+            totalSuma += parseFloat(inputVal);
+        }
+    });
+    $('#result').val(Math.floor(totalSuma * 100) / 100);
+
+    if (inResult.value != 0) {
+
+        let button = document.createElement('button')
+        button.textContent = "COMPRAR";
+        button.className = 'btn btn-outline-success my-2 my-sm-1'
+        button.type = 'submit';
+
+        form.appendChild(button);
+    }
+
+}
+/*
+function updateArray(){
+    let arrayBooks = new Array();
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+        let key = localStorage.key(i)
+        if (key.includes('cart')) {
+            let book = localStorage.getItem(key);
+            arrayBooks.push(JSON.parse(book));
+            //creaDiv(arrayBooks[i].title, arrayBooks[i].price,i,arrayBooks[i].id);
+        }
+    }
+}
+*/
+
+function borrarLibro() {
+    //alert(this.value)
+    localStorage.removeItem(localStorage.key(this.value))
+    $(this).parent().remove()
+    //updateArray()
 }
 
-
-function setCookie (name, value) {
+function setCookie(name, value) {
     var date = new Date(),
         expires = 'expires=';
     date.setDate(date.getDate() + 1);
@@ -100,7 +145,7 @@ $('.precioQty').each(function () {
         totalSuma += parseFloat(inputVal);
     }
 });
-$('#result').val(Math.floor(totalSuma * 100) / 100);
+
 
 $('.grupo').on('input', function () {
     let cantidad = $(this).find('.qty').val();

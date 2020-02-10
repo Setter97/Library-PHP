@@ -24,7 +24,7 @@
         if($result){
             echo 'Correcto<br>';
         }else{
-            echo 'error<br>'.mysqli_error($conn).'<br>';
+            //echo 'error<br>'.mysqli_error($conn).'<br>';
         }
     }
     resetLocalStorage();
