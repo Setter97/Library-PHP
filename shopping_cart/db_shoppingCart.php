@@ -22,7 +22,7 @@
         $result=mysqli_query($conn,$sql);
 
         if($result){
-            echo 'Correcto<br>';
+            echo 'Correcto';
         }else{
             //echo 'error<br>'.mysqli_error($conn).'<br>';
         }

@@ -6,14 +6,14 @@ for (let i = 0; i < localStorage.length; i++) {
     if (key.includes('cart')) {
         let book = localStorage.getItem(key);
         arrayBooks.push(JSON.parse(book));
-        creaDiv(arrayBooks[i].title, arrayBooks[i].price, i, arrayBooks[i].id);
+        creaDiv(arrayBooks[i].title, arrayBooks[i].price, i, arrayBooks[i].id,arrayBooks[i].copy)
     }
 }
 creaResultID()
 
 setCookie('cart', JSON.stringify(arrayBooks));
 
-function creaDiv(nameBook, price, i, id) {
+function creaDiv(nameBook, price, i, id,maxCant) {
     let form = document.getElementById('form');
     let div = document.createElement("div");
     div.className = "grupo"
@@ -35,6 +35,7 @@ function creaDiv(nameBook, price, i, id) {
     qty.className = "qty"
     qty.name = `qty${i}`
     qty.min = 1;
+    qty.max=maxCant;
     div.appendChild(qty);
 
     let precio = document.createElement("input");
@@ -99,6 +100,7 @@ function creaResultID() {
 
         let button = document.createElement('button')
         button.textContent = "COMPRAR";
+        button.addEventListener('click',checkCart)
         button.className = 'btn btn-outline-success my-2 my-sm-1'
         button.type = 'submit';
 
@@ -106,26 +108,12 @@ function creaResultID() {
     }
 
 }
-/*
-function updateArray(){
-    let arrayBooks = new Array();
-
-    for (let i = 0; i < localStorage.length; i++) {
-
-        let key = localStorage.key(i)
-        if (key.includes('cart')) {
-            let book = localStorage.getItem(key);
-            arrayBooks.push(JSON.parse(book));
-            //creaDiv(arrayBooks[i].title, arrayBooks[i].price,i,arrayBooks[i].id);
-        }
-    }
-}
-*/
 
 function borrarLibro() {
     //alert(this.value)
     localStorage.removeItem(localStorage.key(this.value))
     $(this).parent().remove()
+    location.reload();
     //updateArray()
 }
 
@@ -135,6 +123,41 @@ function setCookie(name, value) {
     date.setDate(date.getDate() + 1);
     expires += date.toGMTString();
     document.cookie = name + '=' + value + '; ' + expires + '; path=/';
+}
+
+
+function checkCart(){
+    let formulari=new FormData();
+    for (let i = 0; i < localStorage.length; i++) {
+
+        let key = localStorage.key(i)
+        if (key.includes('cart')) {
+            
+            formulari.append('id',arrayBooks[i].id)
+            formulari.append('price',arrayBooks[i].price)
+
+            fetch('fetchPHP.php',{
+                method:'POST',
+                body: formulari 
+            })
+            .then(response=>response.json())
+            .then(response=>{
+                if(response[1]<1){
+                    alert("El libro selecionado no esta disponible")
+                }
+                if(arrayBooks[i].price!=response[0]){
+                    alert("Precios desactualizados.... Actualizando precios de los libros...");
+                    var book = {title:arrayBooks[i].title, author:arrayBooks[i].author, price:response[0],id:arrayBooks[i].id,copy:response[1]};
+                    localStorage.setItem(`cart${arrayBooks[i].id}`,JSON.stringify(book));
+                }
+                //console.log(response);
+                //alert(response);
+            })
+        }
+    }
+    
+    
+
 }
 
 //JQuery
@@ -166,3 +189,5 @@ $('.grupo').on('input', function () {
 
     $('#result').val(Math.floor(totalSuma * 100) / 100);
 });
+
+

@@ -6,9 +6,11 @@
 <script src="shoppingcartCore.js" async></script>
 <body>
     <?php include '../header.php' ?>    
-    <div align='center'> <form id="form" method="POST" action="db_shoppingCart.php">
+    <div align='center'> 
+        <form id="form" >
 
-</form></div>
+        </form>
+    </div>
    
 </body>
 

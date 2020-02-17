@@ -208,11 +208,12 @@
 
     function appendLocalStorage($id){
         include 'DB_Connect.php';
-        $infoSql=mysqli_query($conn,"select title,author_id,price from books where book_id='$id'");
+        $infoSql=mysqli_query($conn,"select title,author_id,price,copyBook from books where book_id='$id'");
         $info=$infoSql->fetch_assoc();
         $titulo=$info['title'];
         $author=$info['author_id'];
         $price=$info['price'];
+        $copy=$info['copyBook'];
 
 
          
@@ -222,6 +223,7 @@
         $libro -> author = $author;
         $libro -> price = $price;
         $libro -> id = $id;
+        $libro -> copy = $copy;
         $superjason=json_encode($libro);
 
         echo " <script>
