@@ -3,17 +3,18 @@ let arrayBooks = new Array();
 for (let i = 0; i < localStorage.length; i++) {
 
     let key = localStorage.key(i)
-    if (key.includes('cart')) {
-        let book = localStorage.getItem(key);
-        arrayBooks.push(JSON.parse(book));
-        creaDiv(arrayBooks[i].title, arrayBooks[i].price, i, arrayBooks[i].id,arrayBooks[i].copy)
-    }
+    //if (key.includes('cart')) {
+    let book = localStorage.getItem(key);
+    arrayBooks.push(JSON.parse(book));
+    creaDiv(arrayBooks[i].title, arrayBooks[i].price, i, arrayBooks[i].id, arrayBooks[i].copy, arrayBooks[i].quantity)
+    //}
 }
+
 creaResultID()
 
 setCookie('cart', JSON.stringify(arrayBooks));
 
-function creaDiv(nameBook, price, i, id,maxCant) {
+function creaDiv(nameBook, price, i, id, maxCant, cantidad) {
     let form = document.getElementById('form');
     let div = document.createElement("div");
     div.className = "grupo"
@@ -30,19 +31,20 @@ function creaDiv(nameBook, price, i, id,maxCant) {
     div.appendChild(inputID);
 
     let qty = document.createElement("input");
-    qty.value = 1;
+    qty.value = cantidad;
+    qty.id = `qty${i}`
     qty.type = "number"
     qty.className = "qty"
     qty.name = `qty${i}`
     qty.min = 1;
-    qty.max=maxCant;
+    qty.max = maxCant;
     div.appendChild(qty);
 
     let precio = document.createElement("input");
     precio.className = "precio";
     precio.value = price
     precio.step = 0.01;
-    precio.name = `price${i}`
+    precio.id = `price${i}`
     precio.type = "number"
     precio.readOnly = true;
     div.appendChild(precio);
@@ -50,7 +52,7 @@ function creaDiv(nameBook, price, i, id,maxCant) {
     let precioQty = document.createElement("input");
     precioQty.value = price
     precioQty.step = 0.01
-    precioQty.name = `precioQty${i}`
+    precioQty.id = `precioQty${i}`
     precioQty.className = "precioQty"
     div.appendChild(precioQty);
 
@@ -100,7 +102,7 @@ function creaResultID() {
 
         let button = document.createElement('button')
         button.textContent = "COMPRAR";
-        button.addEventListener('click',checkCart)
+        button.addEventListener('click', checkCart)
         button.className = 'btn btn-outline-success my-2 my-sm-1'
         button.type = 'submit';
 
@@ -125,40 +127,126 @@ function setCookie(name, value) {
     document.cookie = name + '=' + value + '; ' + expires + '; path=/';
 }
 
+function actualizaArray(){
+    arrayBooks=new Array();
 
-function checkCart(){
-    let formulari=new FormData();
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i)
+        let book = localStorage.getItem(key);
+        arrayBooks.push(JSON.parse(book));
+    }
+}
+
+function checkCart() {
+    actualizaArray()
+    let i=0;
+    let bol=false;
+    Promise.all(
+        arrayBooks.map(book=>{
+            let bookData=new FormData();
+            bookData.append("id",book.id);
+            bookData.append("price",book.price);
+            
+            //alert(book.price)
+            return fetch('fetchPHP.php',{
+                method:'POST',
+                body:bookData
+            })
+            .then(response=>response.json())
+            .then(response=>{
+                if (response[1] < 1) {
+                    alert("El libro selecionado no esta disponible")
+                }
+                if (book.price != response[0]) {
+                    alert("Precios desactualizados.... Actualizando precios de los libros...");
+                    var bookUpdate = {
+                        title: book.title,
+                        author: book.author,
+                        price: response[0],
+                        id: book.id,
+                        copy: response[1],
+                        quantity: 1
+                    };
+                    localStorage.setItem(`cart${book.id}`, JSON.stringify(bookUpdate));
+                    return 'false';
+
+                } else {
+                    let cantidad = $(`#qty${i}`).val();
+                    //alert(cantidad);
+                    var bookUpdate = {
+                        title: book.title,
+                        author: book.author,
+                        price: book.price,
+                        id: book.id,
+                        copy: book.copy,
+                        quantity: cantidad
+                    };
+                    localStorage.setItem(`cart${arrayBooks[i].id}`, JSON.stringify(bookUpdate));
+                    return 'true';
+                }
+                i++;
+            })
+        })
+    ).then(response=>{
+        if(response=='false'){
+            alert("false");
+        }else{
+            alert("true")
+        }
+    })    
+}
+
+function DOITNOWMABOY() {
+   alert("DOIT")
+}
+
+/*
+function checkCart() {
+    let formulari = new FormData();
     for (let i = 0; i < localStorage.length; i++) {
 
         let key = localStorage.key(i)
         if (key.includes('cart')) {
-            
-            formulari.append('id',arrayBooks[i].id)
-            formulari.append('price',arrayBooks[i].price)
 
-            fetch('fetchPHP.php',{
+            formulari.append('id', arrayBooks[i].id)
+            formulari.append('price', arrayBooks[i].price)
+
+        
+        }
+       
+        let result=$('#result').val()
+        if(i==0){
+
+            let form2=new FormData();
+            form2.append('result',result)
+            fetch('lastID.php',{
                 method:'POST',
-                body: formulari 
+                body:form2
             })
             .then(response=>response.json())
             .then(response=>{
-                if(response[1]<1){
-                    alert("El libro selecionado no esta disponible")
-                }
-                if(arrayBooks[i].price!=response[0]){
-                    alert("Precios desactualizados.... Actualizando precios de los libros...");
-                    var book = {title:arrayBooks[i].title, author:arrayBooks[i].author, price:response[0],id:arrayBooks[i].id,copy:response[1]};
-                    localStorage.setItem(`cart${arrayBooks[i].id}`,JSON.stringify(book));
-                }
-                //console.log(response);
-                //alert(response);
             })
         }
-    }
-    
-    
+        //alert(idCart)
+        let pass = new FormData();
+        pass.append('id', arrayBooks[i].id)
+        pass.append('qty', $(`#qty${i}`).val())
+        pass.append('price', $(`#price${i}`).val())
+        pass.append('priceQty', $(`#precioQty${i}`).val())
+        pass.append('result', result)
 
-}
+        fetch('db_shoppingCart.php', {
+            method: 'POST',
+            body: pass
+        })
+        .then(response => response.json())
+        .then(response =>{
+            if(response=="Correcto"){
+                //localStorage.removeItem(localStorage.key(i));
+            }
+        })
+    }
+}*/
 
 //JQuery
 let totalSuma = 0
@@ -191,3 +279,7 @@ $('.grupo').on('input', function () {
 });
 
 
+//FETCH QUE FUNCIONA
+/*
+
+*/

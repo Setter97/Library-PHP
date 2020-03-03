@@ -224,6 +224,7 @@
         $libro -> price = $price;
         $libro -> id = $id;
         $libro -> copy = $copy;
+        $libro -> quantity = 1;
         $superjason=json_encode($libro);
 
         echo " <script>
