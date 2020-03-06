@@ -137,11 +137,12 @@ function actualizaArray(){
     }
 }
 
-function checkCart() {
+ function checkCart() {
     actualizaArray()
     let i=0;
     let bol=false;
-    Promise.all(
+
+     Promise.all(
         arrayBooks.map(book=>{
             let bookData=new FormData();
             bookData.append("id",book.id);
@@ -168,7 +169,7 @@ function checkCart() {
                         quantity: 1
                     };
                     localStorage.setItem(`cart${book.id}`, JSON.stringify(bookUpdate));
-                    return 'false';
+                    //return 'false';
 
                 } else {
                     let cantidad = $(`#qty${i}`).val();
@@ -181,72 +182,33 @@ function checkCart() {
                         copy: book.copy,
                         quantity: cantidad
                     };
+                    //alert(arrayBooks[i].id)
                     localStorage.setItem(`cart${arrayBooks[i].id}`, JSON.stringify(bookUpdate));
-                    return 'true';
+                    actualizaArray()
+                    //return 'true';
                 }
                 i++;
             })
         })
-    ).then(response=>{
-        if(response=='false'){
-            alert("false");
-        }else{
-            alert("true")
-        }
-    })    
+    ).then(DOITNOWMABOY)   
 }
 
-function DOITNOWMABOY() {
+ function DOITNOWMABOY(){
    alert("DOIT")
+   
+   actualizaArray()
+   let bookData=new FormData();
+            bookData.append("array",JSON.stringify(arrayBooks));
+            bookData.append("result",$('#result').val());
+
+fetch('db_shoppingCart.php',{
+        method:'POST',
+        body:bookData
+   }).then(respuesta=>respuesta.json())
+   .then(respuesta=>alert(respuesta))
 }
 
-/*
-function checkCart() {
-    let formulari = new FormData();
-    for (let i = 0; i < localStorage.length; i++) {
 
-        let key = localStorage.key(i)
-        if (key.includes('cart')) {
-
-            formulari.append('id', arrayBooks[i].id)
-            formulari.append('price', arrayBooks[i].price)
-
-        
-        }
-       
-        let result=$('#result').val()
-        if(i==0){
-
-            let form2=new FormData();
-            form2.append('result',result)
-            fetch('lastID.php',{
-                method:'POST',
-                body:form2
-            })
-            .then(response=>response.json())
-            .then(response=>{
-            })
-        }
-        //alert(idCart)
-        let pass = new FormData();
-        pass.append('id', arrayBooks[i].id)
-        pass.append('qty', $(`#qty${i}`).val())
-        pass.append('price', $(`#price${i}`).val())
-        pass.append('priceQty', $(`#precioQty${i}`).val())
-        pass.append('result', result)
-
-        fetch('db_shoppingCart.php', {
-            method: 'POST',
-            body: pass
-        })
-        .then(response => response.json())
-        .then(response =>{
-            if(response=="Correcto"){
-                //localStorage.removeItem(localStorage.key(i));
-            }
-        })
-    }
-}*/
 
 //JQuery
 let totalSuma = 0

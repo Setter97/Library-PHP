@@ -7,9 +7,9 @@
 <body>
     <?php include '../header.php' ?>    
     <div align='center'> 
-        <form id="form" >
+        <div id="form" >
 
-        </form>
+</div>
     </div>
    
 </body>
