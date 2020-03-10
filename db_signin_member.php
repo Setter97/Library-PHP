@@ -10,11 +10,12 @@ if(isset($_POST['submitLogin'])){
    echo $data['pwd'];
    if(password_verify($pwd,$data['pwd'])){
 
-         $result=mysqli_query($conn,"select member_dni,type_user from members WHERE e_mail='$mail'");
+         $result=mysqli_query($conn,"select member_dni,type_user,city from members WHERE e_mail='$mail'");
          $data=mysqli_fetch_assoc($result);
 
          setcookie('idUsuario',$data['member_dni'],time()+86400);
          setcookie('idCliente',$data['type_user'],time()+86400);
+         setcookie('localizacion',$data['city'],time()+86400);
          header('Location: index.php');
    }else{
       echo 'Error en el login';

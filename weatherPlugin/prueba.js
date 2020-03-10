@@ -1,7 +1,6 @@
-let idApi='vULIFNPmrRouOEKF1dmlxRX3GC0NmHjG'
-tiempo()
 function tiempo(){
-    let city="Madrid"
+    let idApi='vULIFNPmrRouOEKF1dmlxRX3GC0NmHjG'
+    let city="Ciudadela"//AKA KUKI
         fetch("http://dataservice.accuweather.com/locations/v1/cities/search?apikey="+idApi+"&q="+city+"&language=es-ES")
         .then(response=>response.json())
         .then(response=>{

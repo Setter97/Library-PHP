@@ -239,9 +239,3 @@ $('.grupo').on('input', function () {
 
     $('#result').val(Math.floor(totalSuma * 100) / 100);
 });
-
-
-//FETCH QUE FUNCIONA
-/*
-
-*/
